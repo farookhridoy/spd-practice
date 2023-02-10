@@ -40,10 +40,7 @@ push(st, 'S')
 push(st, 'T')
 push(st, 'A')
 push(st, 'C')
-push(st, 'K')
-push(st, 'S')
-push(st, 'T')
-push(st, 'A')
+
 
 print(st)
 push(st, 'O')
