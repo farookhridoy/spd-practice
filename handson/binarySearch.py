@@ -1,4 +1,3 @@
-
 # initial array
 def make_array():
     arr = []
