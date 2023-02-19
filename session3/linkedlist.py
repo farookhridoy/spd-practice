@@ -50,6 +50,24 @@ class LinkedList:
         if curr:
             prev.next = curr.next
         return self.head
+    # remove nth item form the end of linked list
+
+    def removeNthFromEnd(self, head, n):
+        fast = head
+        slow = head
+
+        for i in range(n):
+            fast = fast.next
+
+        if not fast:
+            return head.next
+
+        while fast.next:
+            fast = fast.next
+            slow = slow.next
+
+        slow.next = slow.next.next
+        return head
 
 
 llist = LinkedList()
@@ -57,5 +75,5 @@ llist.add(10)
 llist.add(4)
 llist.add(16)
 llist.add(19)
-llist.delete(20)
+llist.removeNthFromEnd(llist.head, 2)
 print(llist)

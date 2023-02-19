@@ -20,6 +20,8 @@ def delete(arr, item):
 
 # Search item on array
 
+# Recursion  method
+
 
 def binarySearch(arr, low, high, item):
     # Base case
@@ -40,6 +42,36 @@ def binarySearch(arr, low, high, item):
     else:
         return "Not found"
 
+# Divide and conqure method
+# Iterative method
+
+
+def iterative_binary_serach(arr, item):
+    # base case
+    if len(arr) < 0:
+        return False
+
+    # Sorting if arr is unsorted
+    arr.sort()
+    head = 0
+    tail = len(arr)-1
+    mid = 0
+
+    while head <= tail:
+        mid = (head+tail)//2
+
+        # if mid is greater then item then igonre the right site of array
+        if arr[mid] > item:
+            tail = mid-1
+        # If mid element is smaller then item then ignore left site of array
+        elif arr[mid] < item:
+            head = mid+1
+        # Mid is equal to item then return mid
+        else:
+            return mid
+
+    return "No Item Found"
+
 
 # initial array
 d_array = make_array()
@@ -53,8 +85,12 @@ add(d_array, 5)
 d_array.sort()
 print("Array is: " + str(d_array))
 
-item = 5
+item = 10
+item2 = 6
 
 search_result = binarySearch(d_array, 0, len(d_array)-1, item)
 
+iterative_binary_result = iterative_binary_serach(d_array, item2)
+
 print("Element is present at index: " + str(search_result))
+print("Iterative search result at index: " + str(iterative_binary_result))
