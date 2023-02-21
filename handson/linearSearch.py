@@ -26,7 +26,7 @@ def linerSearch(arr, item):
     if len(arr) < 0:
         return False
 
-    # Itarate untill match item
+    # Iterate until match item
 
     for i in range(0, len(arr)):
         if (arr[i] == item):
