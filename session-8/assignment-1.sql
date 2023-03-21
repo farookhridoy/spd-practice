@@ -1,3 +1,5 @@
+#Find different employee/user from requistion table.
+
 SELECT DISTINCT author_id FROM requisitions;
 # Using distinct value
 SELECT DISTINCT delivery_status FROM requisitions;
@@ -5,7 +7,7 @@ SELECT DISTINCT delivery_status FROM requisitions;
 SELECT MIN(requisition_date), MAX(requisition_date)
 FROM requisitions;
 
-#Find how many proposal create with an proposal
+#Find how many proposal create with an requistion
 SELECT rp.reference_no, rp.request_date, r.reference_no as "requistion_no", r.author_id,
     COUNT(rpr.request_proposal_id) as "total_proposal_no"
 FROM requisitions r
@@ -19,10 +21,10 @@ SELECT r.author_id, u.name,
     COUNT(r.author_id) as "total_requisition"
 FROM requisitions r
     INNER JOIN users u ON u.id = r.author_id
-WHERE r.requisition_date BETWEEN '2022-07-06' AND '2022-09-30'
-GROUP BY  r.author_id, u.name
-HAVING COUNT(r.author_id) > 3
-ORDER BY total_requisition DESC;
+    WHERE r.requisition_date BETWEEN '2022-07-06' AND '2022-09-30'
+    GROUP BY  r.author_id, u.name
+    HAVING COUNT(r.author_id) > 3
+    ORDER BY total_requisition DESC;
 
 #Split column query
 #EST-22-CEIL-059
@@ -83,5 +85,17 @@ FROM(
 #Variable & Casting in SQL
 
 
-
+#Purchase Order List in certain time
+SELECT po.po_date,
+       po.reference_no AS "Purchase Ref No",
+       q.reference_no AS "Quotation Ref No",
+       sp.name AS "Supplier Name",
+       po.gross_price AS "PO Ammount",
+       c.code AS "Currency"
+from purchase_orders po
+    INNER JOIN quotations q ON q.id = po.quotation_id
+    INNER JOIN suppliers sp ON sp.id=q.supplier_id
+    INNER JOIN exchange_rates er on q.exchange_rate_id = er.id
+    INNER JOIN currencies c ON er.currency_id = c.id
+WHERE po.po_date BETWEEN '2021-07-06' AND '2023-02-28';
 
