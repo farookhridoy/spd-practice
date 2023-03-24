@@ -16,53 +16,53 @@
 
 # Sql Query for that.
 
-SELECT temp.*,
-       CASE
-          WHEN insurance_type = "TERMLIFE" AND risk= "LOW" THEN ROUND((100 * 10 / (100))*12, 2)
-          WHEN insurance_type = "TERMLIFE" AND risk= "MEDIUM" THEN ROUND((8.5 * 100.0 / (100))*12, 2)
-          WHEN insurance_type = "TERMLIFE" AND risk= "HIGH" THEN ROUND((7 * 100.0 / (100))*12, 2)
+`    SELECT temp.*,
+        CASE
+            WHEN insurance_type = "TERMLIFE" AND risk= "LOW" THEN ROUND((100 * 10 / (100))*12, 2)
+            WHEN insurance_type = "TERMLIFE" AND risk= "MEDIUM" THEN ROUND((8.5 * 100.0 / (100))*12, 2)
+            WHEN insurance_type = "TERMLIFE" AND risk= "HIGH" THEN ROUND((7 * 100.0 / (100))*12, 2)
 
-          WHEN insurance_type = "HEALTH" AND risk= "LOW" THEN ROUND((2 * 400.0 / (100))*12, 2)
-          WHEN insurance_type = "HEALTH" AND risk= "MEDIUM" THEN ROUND((1.5 * 400.0 / (100))*12, 2)
-          WHEN insurance_type = "HEALTH" AND risk= "HIGH" THEN ROUND((1 * 400.0 / (100))*12, 2)
+            WHEN insurance_type = "HEALTH" AND risk= "LOW" THEN ROUND((2 * 400.0 / (100))*12, 2)
+            WHEN insurance_type = "HEALTH" AND risk= "MEDIUM" THEN ROUND((1.5 * 400.0 / (100))*12, 2)
+            WHEN insurance_type = "HEALTH" AND risk= "HIGH" THEN ROUND((1 * 400.0 / (100))*12, 2)
 
-          WHEN insurance_type = "ENDOWMENT" AND risk= "LOW" THEN ROUND((15 * 500.0 / (100))*12, 2)
-          WHEN insurance_type = "ENDOWMENT" AND risk= "MEDIUM" THEN ROUND((12 * 500.0 / (100))*12, 2)
-          WHEN insurance_type = "ENDOWMENT" AND risk= "HIGH" THEN ROUND((10 * 500.0 / (100))*12, 2)
-        ELSE 0
-    END AS amount
-FROM(
-    SELECT user_id, insurance_type,risk
-    FROM users
-    ORDER BY user_id ASC
- ) temp;
-
-# Suppose a user have multiple insurance, calculate the sum of insured amount of every users.
-
-WITH insurance_user_tb AS (
-        SELECT temp.*,
-           CASE
-              WHEN insurance_type = "TERMLIFE" AND risk= "LOW" THEN ROUND((100 * 10 / (100))*12, 2)
-              WHEN insurance_type = "TERMLIFE" AND risk= "MEDIUM" THEN ROUND((8.5 * 100.0 / (100))*12, 2)
-              WHEN insurance_type = "TERMLIFE" AND risk= "HIGH" THEN ROUND((7 * 100.0 / (100))*12, 2)
-
-              WHEN insurance_type = "HEALTH" AND risk= "LOW" THEN ROUND((2 * 400.0 / (100))*12, 2)
-              WHEN insurance_type = "HEALTH" AND risk= "MEDIUM" THEN ROUND((1.5 * 400.0 / (100))*12, 2)
-              WHEN insurance_type = "HEALTH" AND risk= "HIGH" THEN ROUND((1 * 400.0 / (100))*12, 2)
-
-              WHEN insurance_type = "ENDOWMENT" AND risk= "LOW" THEN ROUND((15 * 500.0 / (100))*12, 2)
-              WHEN insurance_type = "ENDOWMENT" AND risk= "MEDIUM" THEN ROUND((12 * 500.0 / (100))*12, 2)
-              WHEN insurance_type = "ENDOWMENT" AND risk= "HIGH" THEN ROUND((10 * 500.0 / (100))*12, 2)
+            WHEN insurance_type = "ENDOWMENT" AND risk= "LOW" THEN ROUND((15 * 500.0 / (100))*12, 2)
+            WHEN insurance_type = "ENDOWMENT" AND risk= "MEDIUM" THEN ROUND((12 * 500.0 / (100))*12, 2)
+            WHEN insurance_type = "ENDOWMENT" AND risk= "HIGH" THEN ROUND((10 * 500.0 / (100))*12, 2)
             ELSE 0
         END AS amount
     FROM(
         SELECT user_id, insurance_type,risk
         FROM users
         ORDER BY user_id ASC
-     ) temp
-    )
-select insurance_user_tb.user_id as usersId,
-    SUM(insurance_user_tb.amount) as totalAmount
-FROM insurance_user_tb
-GROUP BY usersId
-ORDER BY totalAmount ASC
+    ) temp;`
+
+# Suppose a user have multiple insurance, calculate the sum of insured amount of every users.
+
+    WITH insurance_user_tb AS (
+            SELECT temp.*,
+            CASE
+                WHEN insurance_type = "TERMLIFE" AND risk= "LOW" THEN ROUND((100 * 10 / (100))*12, 2)
+                WHEN insurance_type = "TERMLIFE" AND risk= "MEDIUM" THEN ROUND((8.5 * 100.0 / (100))*12, 2)
+                WHEN insurance_type = "TERMLIFE" AND risk= "HIGH" THEN ROUND((7 * 100.0 / (100))*12, 2)
+
+                WHEN insurance_type = "HEALTH" AND risk= "LOW" THEN ROUND((2 * 400.0 / (100))*12, 2)
+                WHEN insurance_type = "HEALTH" AND risk= "MEDIUM" THEN ROUND((1.5 * 400.0 / (100))*12, 2)
+                WHEN insurance_type = "HEALTH" AND risk= "HIGH" THEN ROUND((1 * 400.0 / (100))*12, 2)
+
+                WHEN insurance_type = "ENDOWMENT" AND risk= "LOW" THEN ROUND((15 * 500.0 / (100))*12, 2)
+                WHEN insurance_type = "ENDOWMENT" AND risk= "MEDIUM" THEN ROUND((12 * 500.0 / (100))*12, 2)
+                WHEN insurance_type = "ENDOWMENT" AND risk= "HIGH" THEN ROUND((10 * 500.0 / (100))*12, 2)
+                ELSE 0
+            END AS amount
+        FROM(
+            SELECT user_id, insurance_type,risk
+            FROM users
+            ORDER BY user_id ASC
+        ) temp
+        )
+    select insurance_user_tb.user_id as usersId,
+        SUM(insurance_user_tb.amount) as totalAmount
+    FROM insurance_user_tb
+    GROUP BY usersId
+    ORDER BY totalAmount ASC
