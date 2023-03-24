@@ -16,7 +16,7 @@
 
 # Sql Query for that.
 
-`    SELECT temp.*,
+    SELECT temp.*,
         CASE
             WHEN insurance_type = "TERMLIFE" AND risk= "LOW" THEN ROUND((100 * 10 / (100))*12, 2)
             WHEN insurance_type = "TERMLIFE" AND risk= "MEDIUM" THEN ROUND((8.5 * 100.0 / (100))*12, 2)
@@ -35,7 +35,7 @@
         SELECT user_id, insurance_type,risk
         FROM users
         ORDER BY user_id ASC
-    ) temp;`
+    ) temp;
 
 # Suppose a user have multiple insurance, calculate the sum of insured amount of every users.
 
